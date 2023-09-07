@@ -2,10 +2,10 @@ from aiogram import Bot
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 
-from editor.utils.send_panel import send_panel
+from aiotools_editor.utils.send_panel import send_panel
 
 
-async def media_spoiler_switch(
+async def disable_notifications_switch(
         callback_query: CallbackQuery,
         state: FSMContext,
         bot: Bot
@@ -13,13 +13,15 @@ async def media_spoiler_switch(
     state_data = await state.get_data()
 
     await state.update_data({
-        "has_spoiler": not state_data.get('has_spoiler')
+        "disable_notifications": not state_data.get('disable_notifications')
     })
+
+    state_data = await state.get_data()
 
     await callback_query.message.delete()
 
     await callback_query.answer(
-        text=f"Спойлер {'увімкнено' if not state_data.get('has_spoiler') else 'вимкнено'}"
+        text=f"Сповіщення {'увімкнено' if not state_data.get('disable_notifications') else 'вимкнено'}"
     )
 
     await send_panel(
@@ -27,3 +29,4 @@ async def media_spoiler_switch(
         state=state,
         bot=bot
     )
+

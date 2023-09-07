@@ -1,7 +1,7 @@
 from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 
-from editor.cbdata import ButtonCallbackData
+from aiotools_editor.cbdata import ButtonCallbackData
 
 
 async def edit_url(

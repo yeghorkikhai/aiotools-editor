@@ -6,7 +6,7 @@ from .edit_name import edit_name
 from .edit_url import edit_url
 
 # Callback data
-from editor.cbdata import ButtonCallbackData
+from aiotools_editor.cbdata import ButtonCallbackData
 
 
 router = Router()
