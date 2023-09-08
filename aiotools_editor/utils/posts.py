@@ -3,6 +3,8 @@ from aiogram.fsm.context import FSMContext
 
 from ..states import PostState
 from ..enums import AllowedMethods
+from ..utils.send_message import send_message
+from ..utils.send_panel import send_panel
 
 
 async def create_post(
@@ -38,8 +40,10 @@ async def edit_post(
         album: list | None = None,
         has_media_spoiler: bool = False,
         disable_web_page_preview: bool = False,
+        disable_notification: bool = False,
+        allowed_methods: list[AllowedMethods] | None = None
 ):
-    await state.set_state(PostState.message)
+    await state.set_state(PostState.edit)
 
     data = {
         "text": text,
@@ -51,11 +55,21 @@ async def edit_post(
         "document": document,
         "album": album,
         "has_media_spoiler": has_media_spoiler,
-        "disable_web_page_preview": disable_web_page_preview
+        "disable_web_page_preview": disable_web_page_preview,
+        "disable_notification": disable_notification,
+        "allowed_methods": allowed_methods
     }
 
-    await state.update_data({
-        'message_id': 1,
-        'panel_message_id': 2,
-        **data
-    })
+    await state.update_data(**data)
+
+    await send_message(
+        chat_id=chat_id,
+        state=state,
+        bot=bot
+    )
+
+    await send_panel(
+        chat_id=chat_id,
+        state=state,
+        bot=bot
+    )

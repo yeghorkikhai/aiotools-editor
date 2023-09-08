@@ -27,7 +27,7 @@ def panel_keyboard(
         then_callback_data: str,
         back_title: str,
         then_title: str,
-        allowed_methods: list[AllowedMethods] | None = None
+        allowed_methods: list[AllowedMethods] | None
 ) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.row(
@@ -63,28 +63,36 @@ def panel_keyboard(
                 ).pack()
             )
         )
-    builder.row(
-        InlineKeyboardButton(
-            text='🔔' if not disable_notifications else '🔕',
-            callback_data=BaseCallbackData(
-                action='disable_notifications_switch'
-            ).pack()
-        ),
-        InlineKeyboardButton(
-            text=f"Превью {'☑️' if not disable_web_page_preview else '✅'}",
-            callback_data=BaseCallbackData(
-                action='disable_web_page_preview_switch'
-            ).pack()
+    row = []
+    if allowed_methods is None or AllowedMethods.DISABLE_NOTIFICATIONS_SWITCH:
+        row.append(
+            InlineKeyboardButton(
+                text='🔔' if not disable_notifications else '🔕',
+                callback_data=BaseCallbackData(
+                    action='disable_notifications_switch'
+                ).pack()
+            )
         )
-    )
-    builder.row(
-        InlineKeyboardButton(
-            text=f"Спойлер {'✅' if not has_spoiler else '☑️'}",
-            callback_data=BaseCallbackData(
-                action='media_spoiler_switch'
-            ).pack()
+    if allowed_methods is None or AllowedMethods.DISABLE_WEB_PAGE_PREVIEW_SWITCH:
+        row.append(
+            InlineKeyboardButton(
+                text=f"Превью {'☑️' if not disable_web_page_preview else '✅'}",
+                callback_data=BaseCallbackData(
+                    action='disable_web_page_preview_switch'
+                ).pack()
+            )
         )
-    )
+    builder.row(*row)
+
+    if allowed_methods is None or AllowedMethods.SPOILER_SWITCH in allowed_methods:
+        builder.row(
+            InlineKeyboardButton(
+                text=f"Спойлер {'✅' if not has_spoiler else '☑️'}",
+                callback_data=BaseCallbackData(
+                    action='media_spoiler_switch'
+                ).pack()
+            )
+        )
     builder.row(
         InlineKeyboardButton(
             text=back_title if back_title is not None else "‹‹ Назад",

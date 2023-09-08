@@ -13,6 +13,7 @@ async def send_message(
         message = await bot.send_message(
             chat_id=chat_id,
             text=state_data.get("text"),
+            disable_notification=state_data.get("disable_notification"),
             disable_web_page_preview=state_data.get("disable_web_page_preview")
         )
     elif "photo" in state_data:

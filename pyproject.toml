@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiotools-editor"
-version = "0.0.2"
+version = "0.0.3"
 description = ""
 authors = ["yeghorkikhai <yeghorkikhai@gmail.com>"]
 readme = "README.md"
