@@ -26,7 +26,8 @@ async def send_panel(
             back_title=state_data.get("back_title"),
             back_callback_data=state_data.get("back_callback_data"),
             then_title=state_data.get("then_title"),
-            then_callback_data=state_data.get("then_callback_data")
+            then_callback_data=state_data.get("then_callback_data"),
+            allowed_methods=state_data.get('allowed_methods')
         )
     )
 
