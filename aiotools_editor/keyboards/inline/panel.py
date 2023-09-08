@@ -64,7 +64,7 @@ def panel_keyboard(
             )
         )
     row = []
-    if allowed_methods is None or AllowedMethods.DISABLE_NOTIFICATIONS_SWITCH:
+    if allowed_methods is None or AllowedMethods.DISABLE_NOTIFICATIONS_SWITCH in allowed_methods:
         row.append(
             InlineKeyboardButton(
                 text='🔔' if not disable_notifications else '🔕',
@@ -73,7 +73,7 @@ def panel_keyboard(
                 ).pack()
             )
         )
-    if allowed_methods is None or AllowedMethods.DISABLE_WEB_PAGE_PREVIEW_SWITCH:
+    if allowed_methods is None or AllowedMethods.DISABLE_WEB_PAGE_PREVIEW_SWITCH in allowed_methods:
         row.append(
             InlineKeyboardButton(
                 text=f"Превью {'☑️' if not disable_web_page_preview else '✅'}",
